@@ -1,0 +1,33 @@
+@import '../../styles/variables';
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  &:not(:last-child) {
+    margin-bottom: 24px;
+  }
+}
+
+.indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background-color: #fff;
+  box-shadow: 1px 4px 10px rgba(71, 147, 255, 0.2);
+  border-radius: 100%;
+}
+
+.name {
+  color: $color-grey;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.value {
+  color: $color-black;
+  font-size: 14px;
+  font-weight: 400;
+}

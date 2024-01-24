@@ -1,4 +1,5 @@
 import Header from '../pages/header/Header';
+import Home from '../pages/home/Home';
 import './App.scss';
 
 function App() {
@@ -7,7 +8,7 @@ function App() {
       <div className="container">
         <main>
           <Header />
-          <div>App</div>
+          <Home />
         </main>
       </div>
     </div>

@@ -1,10 +1,13 @@
 @import 'normalize.css';
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 * {
   font-family: 'Montserrat', sans-serif;
-  // margin: 0 auto;
   box-sizing: border-box;
+}
+
+body {
+  background-color: var(#{--body-background-light});
 }
 
 .container {
@@ -12,4 +15,29 @@
   padding: 0 15px;
   max-width: 1230px;
   // min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.list-reset {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.btn-reset {
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
 }

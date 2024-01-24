@@ -1,1 +1,15 @@
+$color-main: #4793ff;
 $color-white: #ffffff;
+$color-black: #000000;
+$color-grey: #939cb0;
+$color-background: rgba(71, 147, 255, 0.2);
+$box-shadow: 2px 5px 25px -3px rgba(180, 180, 180, 0.25);
+
+$body-background-dark: #0d1117;
+$body-background-light: #fff;
+
+:root {
+  --body-background-dark: #{$body-background-dark};
+  --body-background-light: #{$body-background-light};
+  --body-background-default: var(#{--body-background-light});
+}
