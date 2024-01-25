@@ -1,0 +1,22 @@
+@import '../../styles/variables';
+
+.tabs {
+  display: flex;
+  gap: 15px;
+  margin-top: 50px;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 144px;
+  height: 35px;
+  border-radius: 5px;
+  background-color: var(#{--components-background-default});
+  box-shadow: 2px 5px 25px -3px rgba(180, 180, 180, 0.25);
+  cursor: pointer;
+  color: var(#{--text-color-default});
+  font-size: 18px;
+  font-weight: 400;
+}

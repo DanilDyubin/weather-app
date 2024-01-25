@@ -1,4 +1,6 @@
 import ThisDayInfoItem from './ThisDayInfoItem';
+import img from '../../assets/img/sun5.png';
+
 import s from './ThisDayInfo.module.scss';
 
 const dataStatistics = [
@@ -32,6 +34,7 @@ const ThisDayInfo = () => {
           <ThisDayInfoItem key={item.icon_id} {...item} />
         ))}
       </ul>
+      <img src={img} alt="" className={s.img} />
     </section>
   );
 };

@@ -27,7 +27,7 @@
 }
 
 .value {
-  color: $color-black;
+  color: var(#{--text-color-default});
   font-size: 14px;
   font-weight: 400;
 }

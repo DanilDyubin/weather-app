@@ -1,26 +1,56 @@
+import { useState, useEffect } from 'react';
 import Icons from '../../assets/icons/global/GlobalSVGSelector';
 import Select from 'react-select';
 
 import s from './Header.module.scss';
 
-const options = [
-  { value: 'Msc', label: 'Москва' },
-  { value: 'Mts', label: 'Мытищи' },
-  { value: 'Spb', label: 'Санкт-Петербург' },
-];
-
-const selectStyles = {
-  control: (styles) => ({
-    ...styles,
-    width: '194px',
-    height: '37px',
-    border: 'none',
-    borderRadius: '10px',
-    backgroundColor: 'rgba(71, 147, 255, 0.2)',
-  }),
-};
-
 const Header = () => {
+  const [theme, setTheme] = useState('light');
+
+  const options = [
+    // select
+    { value: 'Msc', label: 'Москва' },
+    { value: 'Mts', label: 'Мытищи' },
+    { value: 'Spb', label: 'Санкт-Петербург' },
+  ];
+
+  const selectStyles = {
+    // select
+    control: (styles) => ({
+      ...styles,
+      width: '194px',
+      height: '37px',
+      border: 'none',
+      borderRadius: '10px',
+      backgroundColor: theme === 'light' ? 'rgba(71, 147, 255, 0.2)' : '#4f4f4f',
+    }),
+    singleValue: (styles) => ({
+      ...styles,
+      color: theme === 'light' ? '#000' : '#fff',
+    }),
+  };
+
+  const onChangeTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  useEffect(() => {
+    const root = document.querySelector(':root');
+    const themes = [
+      'body-background',
+      'components-background',
+      'card-background',
+      'card-shadow',
+      'text-color',
+    ];
+
+    themes.map((item) => {
+      root.style.setProperty(`--${item}-default`, `var(--${item}-${theme})`);
+    });
+
+    // root.style.setProperty('--body-background-default', `var(--body-background-${theme})`);
+  }, [theme]);
+
   return (
     <header className={s.header}>
       <div className={s.wrapper}>
@@ -36,7 +66,7 @@ const Header = () => {
             <span className={s.moon}>
               <Icons id="icon-moon" />
             </span>
-            <input type="checkbox" className={s.input} />
+            <input type="checkbox" className={s.input} onClick={onChangeTheme} />
             <span className={s.slider}></span>
           </label>
         </div>
