@@ -57,7 +57,14 @@
 }
 
 .heart {
-  width: 20px;
-  height: 20px;
-  border: 1px solid red;
+  font-size: 26px;
+  color: $color-main;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.2);
+  }
 }
+
+// transition: opacity .2s,visibility .2s,transform .3s ease;
+// transform: translateY(-20%);
