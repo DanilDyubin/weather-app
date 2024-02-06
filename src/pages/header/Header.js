@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchWeather, setCity } from '../../redux/slices/getWeatherSlice';
 import Icons from '../../assets/icons/global/GlobalSVGSelector';
 import Select from 'react-select';
 
@@ -6,12 +8,15 @@ import s from './Header.module.scss';
 
 const Header = () => {
   const [theme, setTheme] = useState('light');
+  const { city, itemsWeather } = useSelector((state) => state.getWeather);
+  const dispatch = useDispatch();
+  console.log(city);
 
   const options = [
     // select
-    { value: 'Msc', label: 'Москва' },
-    { value: 'Mts', label: 'Мытищи' },
-    { value: 'Spb', label: 'Санкт-Петербург' },
+    { value: 'Moscow', label: 'Москва' },
+    { value: 'Mytishchi', label: 'Мытищи' },
+    { value: 'Saint Petersburg', label: 'Санкт Петербург' },
   ];
 
   const selectStyles = {
@@ -29,6 +34,14 @@ const Header = () => {
       color: theme === 'light' ? '#000' : '#fff',
     }),
   };
+
+  const getWeather = () => {
+    dispatch(fetchWeather({ city }));
+  };
+
+  useEffect(() => {
+    getWeather();
+  }, [city]);
 
   const onChangeTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
@@ -70,10 +83,15 @@ const Header = () => {
             <span className={s.slider}></span>
           </label>
         </div>
-        <Select options={options} defaultValue={options[0]} styles={selectStyles} />
+        <Select
+          options={options}
+          defaultValue={options[0]}
+          styles={selectStyles}
+          onChange={(obj) => dispatch(setCity(obj.label))}
+        />
       </div>
     </header>
   );
 };
-
+// dispatch(fetchWeather(obj.label))   console.log(obj.label)
 export default Header;

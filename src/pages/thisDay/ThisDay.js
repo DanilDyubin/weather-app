@@ -1,18 +1,19 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleFavorites } from '../../redux/slices/favoriteSlice';
+import { toggleFavorites, closePortal } from '../../redux/slices/favoriteSlice';
 import Icons from '../../assets/icons/global/GlobalSVGSelector';
-import { BsBookmarkHeartFill } from 'react-icons/bs';
+import { BsBookmarkCheckFill, BsFillXCircleFill, BsCheckCircleFill } from 'react-icons/bs';
+
 import Portal from '../../components/Portal';
 
 import s from './ThisDay.module.scss';
 import { combineSlices } from '@reduxjs/toolkit';
 
-const ThisDay = () => {
-  const favorite = useSelector((state) => state.favorites);
-  console.log(favorite);
+const ThisDay = ({ itemsWeather }) => {
+  const { openPortal, items, deleteCity } = useSelector((state) => state.favorites);
+  console.log(itemsWeather);
   const dispatch = useDispatch();
 
-  const city = 'Москва';
   //   const getWeatherApi = async () => {
   //     const apiKey = '0f2792faa0efb5a166998675f96bb975';
   //     const responce = await fetch(
@@ -29,13 +30,14 @@ const ThisDay = () => {
   //       .then((data) => console.log(data));
   //   };
 
-  const getWeatherApi = () => {
-    const apiKey = '0f2792faa0efb5a166998675f96bb975';
-    fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=3&units=metric&lang=ru&appid=${apiKey}`,
-    )
-      .then((responce) => responce.json())
-      .then((data) => console.log(data));
+  useEffect(() => {
+    portalClose();
+  }, [openPortal]);
+
+  const portalClose = () => {
+    if (openPortal) {
+      setTimeout(() => dispatch(closePortal()), 3000);
+    }
   };
 
   return (
@@ -49,20 +51,32 @@ const ThisDay = () => {
           <Icons id="sun" />
         </div>
       </div>
-      <div className={s.time} onClick={getWeatherApi}>
-        Время: 21:54
-      </div>
+      <div className={s.time}>Местное время: 21:54</div>
       <div className={s.bottom__block_wrapper}>
-        <div className={s.city}>Город: Санкт-Петербург</div>
-        <BsBookmarkHeartFill
-          onClick={() => dispatch(toggleFavorites('Снакт-Петербург'))}
-          className={s.heart}
-        />
+        <div className={s.city}>Город: </div>
+        <div
+          className={s.custom_checkbox}
+          onClick={() => dispatch(toggleFavorites('Санкт-Петербур'))}>
+          <input type="checkbox" className={s.checkbox} />
+          <BsBookmarkCheckFill className={s.checkbox_icon} />
+        </div>
       </div>
-
-      <Portal>
-        <div className={s.city_message}>Город добавлен в список</div>
-      </Portal>
+      {openPortal && (
+        <Portal>
+          {/* <div className={s.city_add}>{deleteCity ? 'Город удален' : 'Город добавлен'}</div> */}
+          {deleteCity ? (
+            <div className={s.city_add}>
+              <BsFillXCircleFill />
+              <p>Город удален</p>
+            </div>
+          ) : (
+            <div className={s.city_add}>
+              <BsCheckCircleFill />
+              <p>Город добавлен</p>
+            </div>
+          )}
+        </Portal>
+      )}
     </section>
   );
 };

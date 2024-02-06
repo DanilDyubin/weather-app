@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = ['Москва', 'Мытищи', 'Санкт-петербург'];
+const initialState = {
+  openPortal: false,
+  items: ['Москва', 'Мытищи', 'Санкт-Петербург'],
+  deleteCity: false,
+};
 
 const favoriteSlice = createSlice({
   name: 'favorites',
@@ -11,6 +15,9 @@ const favoriteSlice = createSlice({
     //   if(state.some(obj => obj.id === city.id)) return;
     //   state.push(city);
     // }
+    closePortal: (state) => {
+      state.openPortal = false;
+    },
     toggleFavorites: (state, action) => {
       // const isExists = state.some((obj) => obj.id === action.payload.id);
       // if (isExists) {
@@ -22,15 +29,19 @@ const favoriteSlice = createSlice({
       //   state.push(action.payload);
       // }
 
-      const index = state.findIndex((item) => item.id === action.payload.id);
+      const index = state.items.findIndex((item) => item === action.payload);
       if (index !== -1) {
-        state.splice(index, 1);
+        state.items.splice(index, 1);
+        state.openPortal = true;
+        state.deleteCity = true;
       } else {
-        state.push(action.payload);
+        state.items.push(action.payload);
+        state.openPortal = true;
+        state.deleteCity = false;
       }
     },
   },
 });
 
-export const { toggleFavorites } = favoriteSlice.actions;
+export const { toggleFavorites, closePortal } = favoriteSlice.actions;
 export default favoriteSlice.reducer;
