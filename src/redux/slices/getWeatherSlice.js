@@ -3,21 +3,23 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchWeather = createAsyncThunk(
   'getWeather/fetchWeather',
 
-  async (params) => {
-    const { city } = params;
-    console.log(city);
+  async (city) => {
+    // const { city } = params;
+    // console.log(city);
     const apiKey = '0f2792faa0efb5a166998675f96bb975';
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=3&units=metric&lang=ru&appid=${apiKey}`,
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=ru&appid=${apiKey}`,
     );
 
-    return await response.json();
+    // return await response.json();
+    const data = await response.json();
+    return data;
   },
 );
 
 const initialState = {
   city: 'Москва',
-  itemsWeather: {},
+  itemsWeather: [],
   weatherLoadingStatus: '',
 };
 
@@ -30,7 +32,7 @@ const getWeatherSlice = createSlice({
     },
     setCity(state, action) {
       state.city = action.payload;
-      console.log(state.city);
+      //   console.log(state.city);
     },
   },
   extraReducers: (builder) => [
@@ -41,7 +43,6 @@ const getWeatherSlice = createSlice({
       .addCase(fetchWeather.fulfilled, (state, action) => {
         state.weatherLoadingStatus = 'loaded';
         state.itemsWeather = action.payload;
-        console.log(state.itemsWeather);
       })
       .addCase(fetchWeather.rejected, (state) => {
         state.weatherLoadingStatus = 'error';

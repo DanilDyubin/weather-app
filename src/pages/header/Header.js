@@ -3,14 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchWeather, setCity } from '../../redux/slices/getWeatherSlice';
 import Icons from '../../assets/icons/global/GlobalSVGSelector';
 import Select from 'react-select';
+import InputSearch from '../../components/InputSearch';
 
 import s from './Header.module.scss';
+// import Input from 'react-select/dist/declarations/src/components/Input';
 
 const Header = () => {
   const [theme, setTheme] = useState('light');
   const { city, itemsWeather } = useSelector((state) => state.getWeather);
   const dispatch = useDispatch();
-  console.log(city);
+  //   console.log(city);
 
   const options = [
     // select
@@ -36,7 +38,7 @@ const Header = () => {
   };
 
   const getWeather = () => {
-    dispatch(fetchWeather({ city }));
+    dispatch(fetchWeather(city));
   };
 
   useEffect(() => {
@@ -70,6 +72,7 @@ const Header = () => {
         <Icons id="icon-header" />
         <h1 className={s.title}>REACT WEATHER</h1>
       </div>
+      <InputSearch />
       <div className={s.wrapper}>
         <div className={s.change_theme}>
           <label className={s.switch}>
@@ -93,5 +96,5 @@ const Header = () => {
     </header>
   );
 };
-// dispatch(fetchWeather(obj.label))   console.log(obj.label)
+
 export default Header;
